@@ -19,5 +19,8 @@
   "devDependencies": {
     "shipit": "^1.0.2",
     "shipit-deploy": "^2.4.0"
+  },
+  "dependencies": {
+    "dotenv": "^4.0.0"
   }
 }

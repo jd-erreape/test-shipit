@@ -1,30 +1,30 @@
 module.exports = function (shipit) {
+  require('dotenv').config();
   require('shipit-deploy')(shipit);
 
   shipit.initConfig({
     default: {
-      workspace: '/tmp/github-monitor',
-      deployTo: '/home/jdrap/apps/javascript/test-shipit',
-      repositoryUrl: 'https://github.com/jd-erreape/test-shipit.git',
+      workspace: process.env.SHIPIT_WORKSPACE,
+      deployTo: process.env.SHIPIT_DEPLOY_TO,
+      repositoryUrl: process.env.SHIPIT_REPO,
       ignores: ['.git', 'node_modules', 'shipitfile.js'],
       keepReleases: 2,
       deleteOnRollback: false,
       shallowClone: true
     },
     staging: {
-      servers: 'jdrap@vps413226.ovh.net'
+      servers: process.env.SHIPIT_SERVERS
     }
   });
 
   shipit.on('deploy', (res) => {
-    return shipit.remote('mkdir -p /home/jdrap/apps/javascript/test-shipit/shared');
+    return shipit.remote(`mkdir -p ${process.env.SHIPIT_DEPLOY_TO}/shared`);
   });
 
   shipit.on('published', (res) => {
     let file = 'index.js';
-    let path = '/home/jdrap/apps/javascript/test-shipit';
-    let currentPath = `${path}/current`;
-    let sharedPath = `${path}/shared`;
+    let currentPath = `${process.env.SHIPIT_DEPLOY_TO}/current`;
+    let sharedPath = `${process.env.SHIPIT_DEPLOY_TO}/shared`;
 
     shipit.remote(`ln -s ${sharedPath} shared`, {
       cwd: currentPath
