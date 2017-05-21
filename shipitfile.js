@@ -26,12 +26,22 @@ module.exports = function (shipit) {
     }
   });
 
+  shipit.on('deploy', (res) => {
+    return shipit.remote('mkdir -p /home/jdrap/apps/javascript/test-shipit/shared');
+  });
+
   shipit.on('published', (res) => {
     let file = 'index.js';
-    let path = '/home/jdrap/apps/javascript/test-shipit/current';
+    let path = '/home/jdrap/apps/javascript/test-shipit';
+    let currentPath = `${path}/current`;
+    let sharedPath = `${path}/shared`;
+
+    shipit.remote(`ln -s ${sharedPath} shared`, {
+      cwd: currentPath
+    })
 
     return shipit.remote(`node ${file}`, {
-      cwd: path
+      cwd: currentPath
     }).then((res) => {
       // Do something 
     });
