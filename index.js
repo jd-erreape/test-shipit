@@ -1,3 +1,3 @@
 var exec = require('child_process').exec;
 
-exec('touch works.txt')
+exec('echo $USER >foo.txt')
