@@ -1,0 +1,23 @@
+{
+  "name": "test-shipit",
+  "version": "1.0.0",
+  "description": "Shipit test project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jd-erreape/test-shipit.git"
+  },
+  "author": "Juan de Dios Herrero",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/jd-erreape/test-shipit/issues"
+  },
+  "homepage": "https://github.com/jd-erreape/test-shipit#readme",
+  "devDependencies": {
+    "shipit": "^1.0.2",
+    "shipit-deploy": "^2.4.0"
+  }
+}
