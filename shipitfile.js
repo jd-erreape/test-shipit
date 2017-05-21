@@ -19,7 +19,6 @@ module.exports = function (shipit) {
       ignores: ['.git', 'node_modules', 'shipitfile.js'],
       keepReleases: 2,
       deleteOnRollback: false,
-      key: '/path/to/key',
       shallowClone: true
     },
     staging: {
@@ -28,6 +27,13 @@ module.exports = function (shipit) {
   });
 
   shipit.on('published', (res) => {
-    return shipit.remote('node /home/jdrap/apps/javascript/test-shipit/current/index.js')
+    let file = 'index.js';
+    let path = '/home/jdrap/apps/javascript/test-shipit/current';
+
+    return shipit.remote(`node ${file}`, {
+      cwd: path
+    }).then((res) => {
+      // Do something 
+    });
   })
 };
