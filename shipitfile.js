@@ -2,16 +2,6 @@ module.exports = function (shipit) {
   require('shipit-deploy')(shipit);
 
   shipit.initConfig({
-    staging: {
-      servers: 'jdrap@vps413226.ovh.net'
-    }
-  });
-
-  shipit.task('pwd', function () {
-    return shipit.remote('pwd');
-  });
-
-  shipit.initConfig({
     default: {
       workspace: '/tmp/github-monitor',
       deployTo: '/home/jdrap/apps/javascript/test-shipit',
