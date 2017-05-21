@@ -1,3 +1,23 @@
+let createSharedSymLink = (shipit) => {
+  let currentPath = `${process.env.SHIPIT_DEPLOY_TO}/current`;
+  let sharedPath = `${process.env.SHIPIT_DEPLOY_TO}/shared`;
+
+  shipit.remote(`ln -s ${sharedPath} shared`, {
+    cwd: currentPath
+  })
+};
+
+let restartApp = (shipit) => {
+  let file = 'index.js';
+  let currentPath = `${process.env.SHIPIT_DEPLOY_TO}/current`;
+
+  shipit.remote(`node ${file}`, {
+    cwd: currentPath
+  }).then((res) => {
+    // Do something
+  });
+};
+
 module.exports = function (shipit) {
   require('dotenv').config();
   require('shipit-deploy')(shipit);
@@ -22,18 +42,7 @@ module.exports = function (shipit) {
   });
 
   shipit.on('published', (res) => {
-    let file = 'index.js';
-    let currentPath = `${process.env.SHIPIT_DEPLOY_TO}/current`;
-    let sharedPath = `${process.env.SHIPIT_DEPLOY_TO}/shared`;
-
-    shipit.remote(`ln -s ${sharedPath} shared`, {
-      cwd: currentPath
-    })
-
-    return shipit.remote(`node ${file}`, {
-      cwd: currentPath
-    }).then((res) => {
-      // Do something 
-    });
+    createSharedSymLink(shipit);
+    restartApp(shipit);
   })
 };
